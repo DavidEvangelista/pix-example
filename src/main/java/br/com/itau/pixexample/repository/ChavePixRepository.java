@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ChavePixRepository extends JpaRepository<ChavePix, UUID>, QuerySearchRepository {
+public interface ChavePixRepository extends JpaRepository<ChavePix, UUID> {
 
     @Query("SELECT count(c) FROM ChavePix c WHERE c.ativo = true AND c.numeroAgencia = ?1 AND c.numeroConta = ?2")
     Long count(Integer numeroAgencia, Integer numeroConta);

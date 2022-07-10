@@ -6,11 +6,11 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class SearchDTO {
+public class FilterDTO {
     private TipoChave tipoChave;
     private Integer agencia;
     private Integer conta;
     private String correntista;
     private LocalDateTime dataCriacao;
-    private LocalDateTime dataInativaca;
+    private LocalDateTime dataInativacao;
 }

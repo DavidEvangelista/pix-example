@@ -3,7 +3,7 @@ package br.com.itau.pixexample.web;
 import br.com.itau.pixexample.entity.ChavePix;
 import br.com.itau.pixexample.entity.dto.AlteraChavePixDTO;
 import br.com.itau.pixexample.entity.dto.ChavePixDTO;
-import br.com.itau.pixexample.entity.dto.SearchDTO;
+import br.com.itau.pixexample.entity.dto.FilterDTO;
 import br.com.itau.pixexample.service.ChavePixFactory;
 import br.com.itau.pixexample.service.enums.StrategyEnum;
 import io.swagger.annotations.ApiOperation;
@@ -68,8 +68,8 @@ public class PixController {
     }
 
     @GetMapping(path = "/chaves/filters")
-    public ResponseEntity<List<ChavePixDTO>> findByFilters(SearchDTO search) {
-        var chaves = factory.getStrategy().findAllByParams(search);
+    public ResponseEntity<List<ChavePixDTO>> findByFilters(FilterDTO filter) {
+        var chaves = factory.getStrategy().findAllByParams(filter);
         return ResponseEntity.ok(chaves.stream().map(chave -> modelMapper.map(chave, ChavePixDTO.class)).collect(Collectors.toList()));
     }
 

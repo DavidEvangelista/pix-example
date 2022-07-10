@@ -1,7 +1,7 @@
 package br.com.itau.pixexample.service;
 
 import br.com.itau.pixexample.entity.ChavePix;
-import br.com.itau.pixexample.entity.dto.SearchDTO;
+import br.com.itau.pixexample.entity.dto.FilterDTO;
 import br.com.itau.pixexample.service.enums.StrategyEnum;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface ChavePixStrategy {
 
     ChavePix find(UUID id);
 
-    List<ChavePix> findAllByParams(SearchDTO search);
+    List<ChavePix> findAllByParams(FilterDTO filter);
 
     StrategyEnum getStrategy();
 

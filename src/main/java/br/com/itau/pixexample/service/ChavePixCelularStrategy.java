@@ -5,7 +5,6 @@ import br.com.itau.pixexample.exception.BusinessException;
 import br.com.itau.pixexample.repository.ChavePixRepository;
 import br.com.itau.pixexample.repository.QuerySearchRepository;
 import br.com.itau.pixexample.service.enums.StrategyEnum;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -13,7 +12,7 @@ import java.util.regex.Pattern;
 @Component
 public class ChavePixCelularStrategy extends ChavePixService implements ChavePixStrategy {
 
-    public ChavePixCelularStrategy(ChavePixRepository repository, @Qualifier("quertSearchRepositoryImpl") QuerySearchRepository querySearchRepository) {
+    public ChavePixCelularStrategy(ChavePixRepository repository, QuerySearchRepository querySearchRepository) {
         super(repository, querySearchRepository);
     }
 

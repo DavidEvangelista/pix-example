@@ -1,7 +1,7 @@
 package br.com.itau.pixexample.service;
 
 import br.com.itau.pixexample.entity.ChavePix;
-import br.com.itau.pixexample.entity.dto.SearchDTO;
+import br.com.itau.pixexample.entity.dto.FilterDTO;
 import br.com.itau.pixexample.entity.enums.TipoPessoa;
 import br.com.itau.pixexample.exception.BusinessException;
 import br.com.itau.pixexample.exception.NotFoundException;
@@ -39,12 +39,14 @@ public abstract class ChavePixService implements ChavePixStrategy {
 
     @Override
     public ChavePix find(UUID id) {
-        return repository.findById(id).orElseThrow(NotFoundException::new);
+        return repository
+                .findById(id)
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public List<ChavePix> findAllByParams(SearchDTO search) {
-        return querySearchRepository.findAllByFilter(search);
+    public List<ChavePix> findAllByParams(FilterDTO filter) {
+        return throwIfEmpty(querySearchRepository.findAllByFilter(filter));
     }
 
     @Override
@@ -71,6 +73,13 @@ public abstract class ChavePixService implements ChavePixStrategy {
         if(count > 0) {
             throw new BusinessException("Chave duplicada");
         }
+    }
+
+    private List<ChavePix> throwIfEmpty(List<ChavePix> list) {
+        if(list.isEmpty()) {
+            throw new NotFoundException();
+        }
+        return list;
     }
 
     public abstract void businessValidation(ChavePix entity);

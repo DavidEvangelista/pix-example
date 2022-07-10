@@ -6,13 +6,12 @@ import br.com.itau.pixexample.repository.ChavePixRepository;
 import br.com.itau.pixexample.repository.QuerySearchRepository;
 import br.com.itau.pixexample.service.enums.StrategyEnum;
 import br.com.itau.pixexample.util.CpfCnpjUtil;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ChavePixCpfCnpjStrategy extends ChavePixService implements ChavePixStrategy {
 
-    public ChavePixCpfCnpjStrategy(ChavePixRepository repository, @Qualifier("quertSearchRepositoryImpl") QuerySearchRepository querySearchRepository) {
+    public ChavePixCpfCnpjStrategy(ChavePixRepository repository, QuerySearchRepository querySearchRepository) {
         super(repository, querySearchRepository);
     }
 
