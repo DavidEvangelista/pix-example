@@ -24,6 +24,8 @@ public class QuertSearchRepositoryImpl implements QuerySearchRepository {
         var chavePixRoot = criteriaQuery.from(ChavePix.class);
         var predicates = new ArrayList<Predicate>();
 
+        predicates.add(criteriaBuilder.equal(chavePixRoot.get("ativo"), Boolean.TRUE));
+
         if (filter.getAgencia() != null && filter.getConta() != null) {
             predicates.add(criteriaBuilder.equal(chavePixRoot.get("numeroAgencia"), filter.getAgencia()));
             predicates.add(criteriaBuilder.equal(chavePixRoot.get("numeroConta"), filter.getConta()));
