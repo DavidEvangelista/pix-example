@@ -4,8 +4,7 @@ import br.com.itau.pixexample.service.enums.StrategyEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -25,7 +24,7 @@ public class ChavePixFactory {
     }
 
     private void createStrategy(Set<ChavePixStrategy> strategySet) {
-        strategies = new HashMap<>();
+        strategies = new EnumMap<>(StrategyEnum.class);
         strategySet.forEach(strategy ->strategies.put(strategy.getStrategy(), strategy));
     }
 

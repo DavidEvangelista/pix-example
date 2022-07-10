@@ -4,7 +4,6 @@ import br.com.itau.pixexample.entity.ChavePix;
 import br.com.itau.pixexample.entity.dto.AlteraChavePixDTO;
 import br.com.itau.pixexample.entity.dto.ChavePixDTO;
 import br.com.itau.pixexample.entity.dto.SearchDTO;
-import br.com.itau.pixexample.entity.enums.TipoChave;
 import br.com.itau.pixexample.service.ChavePixFactory;
 import br.com.itau.pixexample.service.enums.StrategyEnum;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

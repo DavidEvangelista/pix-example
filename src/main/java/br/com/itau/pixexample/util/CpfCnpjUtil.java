@@ -2,6 +2,10 @@ package br.com.itau.pixexample.util;
 
 public class CpfCnpjUtil {
 
+    private CpfCnpjUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     private static final int[] pesoCPF = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
     private static final int[] pesoCNPJ = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
 

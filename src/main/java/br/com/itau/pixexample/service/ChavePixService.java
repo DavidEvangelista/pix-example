@@ -8,7 +8,6 @@ import br.com.itau.pixexample.exception.NotFoundException;
 import br.com.itau.pixexample.repository.ChavePixRepository;
 import br.com.itau.pixexample.repository.QuerySearchRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +18,6 @@ public abstract class ChavePixService implements ChavePixStrategy {
 
     protected final ChavePixRepository repository;
     protected final QuerySearchRepository querySearchRepository;
-    protected final ModelMapper modelMapper;
 
     @Override
     public UUID create(ChavePix entity) {
@@ -64,7 +62,7 @@ public abstract class ChavePixService implements ChavePixStrategy {
         if(entity.getTipoPessoa().equals(TipoPessoa.F) && count == 5) {
             throw new BusinessException("Não pode ultrapassar a quantidade máxima de 5 chaves");
         } else if(count == 20) {
-            throw new BusinessException("Não pode ultrapassar a quantidade máxima de 5 chaves");
+            throw new BusinessException("Não pode ultrapassar a quantidade máxima de 20 chaves");
         }
     }
 
