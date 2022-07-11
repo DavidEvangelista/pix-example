@@ -19,10 +19,10 @@ public class ChavePixCelularStrategy extends ChavePixService implements ChavePix
     @Override
     public void businessValidation(ChavePix entity) {
         var isValid = Pattern
-                .compile("^(\\+\\d{2}( )?)?((\\d{2})|\\d{3})[- .]?\\d{5}\\d{4}$")
+                .compile("^(\\+\\d{2})(\\d{2})\\D*(\\d{5}|\\d{4})\\D*(\\d{4})$")
                 .matcher(entity.getValorChave())
                 .matches();
-        if(!isValid || entity.getValorChave().length() > 11) {
+        if(!isValid) {
             throw new BusinessException("Celular inválido");
         }
     }
