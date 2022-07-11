@@ -15,21 +15,21 @@ public class AlteraChavePixDTO {
 
     private String id;
 
-    @NotNull(message = "tipoConta é obrigatório")
+    @NotNull(message = "O campo tipoConta é obrigatório")
     private TipoConta tipoConta;
 
-    @NotNull(message = "numeroAgencia é obrigatório")
-    @Range(min = 1, max = 9999, message = "Limite de 4 digitos")
+    @NotNull(message = "O campo numeroAgencia é obrigatório")
+    @Range(min = 1, max = 9999, message = "O campo numeroAgencia têm um limite de 4 digitos")
     private Integer numeroAgencia;
 
-    @NotNull(message = "numeroConta é obrigatório")
-    @Range(min = 1, max = 99999999, message = "Limite de 8 digitos")
+    @NotNull(message = "O campo numeroConta é obrigatório")
+    @Range(min = 1, max = 99999999, message = "O campo numeroConta têm um limite de 8 digitos")
     private Integer numeroConta;
 
-    @NotBlank(message = "nomeCorrentista é obrigatório")
+    @NotBlank(message = "O campo nomeCorrentista é obrigatório")
     private String nomeCorrentista;
 
-    @NotNull(message = "tipoPessoa é obrigatório")
+    @NotNull(message = "O campo tipoPessoa é obrigatório")
     private TipoPessoa tipoPessoa;
 
     private String sobrenomeCorrentista;

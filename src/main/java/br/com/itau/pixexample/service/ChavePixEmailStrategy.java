@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
 @Component
 public class ChavePixEmailStrategy extends ChavePixService implements ChavePixStrategy {
 
+    private static final String EMAIL_PATTERN =
+            "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                    + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+
     public ChavePixEmailStrategy(ChavePixRepository repository, QuerySearchRepository querySearchRepository) {
         super(repository, querySearchRepository);
     }
@@ -19,11 +23,11 @@ public class ChavePixEmailStrategy extends ChavePixService implements ChavePixSt
     @Override
     public void businessValidation(ChavePix entity) {
         var isValid = Pattern
-                .compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$")
+                .compile(EMAIL_PATTERN)
                 .matcher(entity.getValorChave())
                 .matches();
         if(!isValid || entity.getValorChave().length() > 77) {
-            throw new BusinessException();
+            throw new BusinessException("Email inválido");
         }
     }
 

@@ -4,11 +4,11 @@ import br.com.itau.pixexample.entity.ChavePix;
 import br.com.itau.pixexample.entity.dto.FilterDTO;
 import br.com.itau.pixexample.entity.enums.TipoPessoa;
 import br.com.itau.pixexample.exception.BusinessException;
-import br.com.itau.pixexample.exception.NotFoundException;
 import br.com.itau.pixexample.repository.ChavePixRepository;
 import br.com.itau.pixexample.repository.QuerySearchRepository;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -41,7 +41,7 @@ public abstract class ChavePixService implements ChavePixStrategy {
     public ChavePix find(UUID id) {
         return repository
                 .findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
@@ -69,7 +69,7 @@ public abstract class ChavePixService implements ChavePixStrategy {
     }
 
     private void duplicateValidation(ChavePix entity) {
-        var count = repository.countByValorChave(entity.getValorChave());
+        var count = repository.countByValorChaveAndTipoChave(entity.getValorChave(), entity.getTipoChave());
         if(count > 0) {
             throw new BusinessException("Chave duplicada");
         }
@@ -77,7 +77,7 @@ public abstract class ChavePixService implements ChavePixStrategy {
 
     private List<ChavePix> throwIfEmpty(List<ChavePix> list) {
         if(list.isEmpty()) {
-            throw new NotFoundException();
+            throw new EntityNotFoundException("Não Encontrado");
         }
         return list;
     }

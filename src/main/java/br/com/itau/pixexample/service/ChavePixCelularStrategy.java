@@ -22,8 +22,8 @@ public class ChavePixCelularStrategy extends ChavePixService implements ChavePix
                 .compile("^(\\+\\d{2}( )?)?((\\d{2})|\\d{3})[- .]?\\d{5}\\d{4}$")
                 .matcher(entity.getValorChave())
                 .matches();
-        if(!isValid) {
-            throw new BusinessException();
+        if(!isValid || entity.getValorChave().length() > 11) {
+            throw new BusinessException("Celular inválido");
         }
     }
 

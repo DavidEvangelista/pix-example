@@ -4,8 +4,8 @@ import br.com.itau.pixexample.entity.enums.TipoChave;
 import br.com.itau.pixexample.entity.enums.TipoConta;
 import br.com.itau.pixexample.entity.enums.TipoPessoa;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -15,27 +15,27 @@ public class ChavePixDTO {
 
     private String id;
 
-    @NotNull
+    @NotNull(message = "O campo tipoChave é obrigatório")
     private TipoChave tipoChave;
 
-    @NotBlank(message = "valorChave é obrigatório")
+    @NotBlank(message = "O campo valorChave é obrigatório")
     private String valorChave;
 
-    @NotNull
+    @NotNull(message = "O campo tipoConta é obrigatório")
     private TipoConta tipoConta;
 
-    @NotNull
-    @Max(4)
+    @NotNull(message = "O campo numeroAgencia é obrigatório")
+    @Range(min = 1, max = 9999, message = "O campo numeroAgencia têm um limite de 4 digitos")
     private Integer numeroAgencia;
 
-    @NotNull
-    @Max(8)
+    @NotNull(message = "O campo numeroConta é obrigatório")
+    @Range(min = 1, max = 99999999, message = "O campo numeroConta têm um limite de 8 digitos")
     private Integer numeroConta;
 
-    @NotBlank(message = "nomeCorrentista é obrigatório")
+    @NotBlank(message = "O campo nomeCorrentista é obrigatório")
     private String nomeCorrentista;
 
-    @NotNull
+    @NotNull(message = "O campo tipoPessoa é obrigatório")
     private TipoPessoa tipoPessoa;
 
     private String sobrenomeCorrentista;

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class QuertSearchRepositoryImpl implements QuerySearchRepository {
+public class QuerySearchRepositoryImpl implements QuerySearchRepository {
 
     @PersistenceContext
     private EntityManager em;

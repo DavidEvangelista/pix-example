@@ -10,12 +10,15 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
 @Builder
+@Data
 @Entity
 @Table(name = "TB_CHAVE_PIX")
 @AllArgsConstructor
@@ -40,5 +43,6 @@ public class ChavePix {
     private TipoPessoa tipoPessoa;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataInativacao;
+    @Builder.Default
     private Boolean ativo = Boolean.TRUE;
 }

@@ -13,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -36,14 +34,11 @@ public class PixController {
             @ApiResponse(code = 200, message = "Chave PIX criada"),
             @ApiResponse(code = 422, message = "Erro de negócio")
     })
-    public ResponseEntity<UUID> createKey(@Valid @RequestBody ChavePixDTO dto, Errors erros) {
-        if(!erros.hasErrors()) {
-            var retorno = factory
-                    .getStrategy(StrategyEnum.fromStrategyName(dto.getTipoChave().name()))
-                    .create(modelMapper.map(dto, ChavePix.class));
-            return ResponseEntity.ok(retorno);
-        }
-        throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+    public ResponseEntity<UUID> createKey(@Valid @RequestBody ChavePixDTO dto) {
+        var retorno = factory
+                .getStrategy(StrategyEnum.fromStrategyName(dto.getTipoChave().name()))
+                .create(modelMapper.map(dto, ChavePix.class));
+        return ResponseEntity.ok(retorno);
     }
 
     @PutMapping(path = "/chaves/{id}")
@@ -52,13 +47,10 @@ public class PixController {
             @ApiResponse(code = 200, message = "Chave PIX Atualizada"),
             @ApiResponse(code = 422, message = "Erro de negócio")
     })
-    public ResponseEntity<ChavePixDTO> updateKey(@PathVariable("id") String id, @Valid @RequestBody AlteraChavePixDTO dto, Errors erros) {
-        if(!erros.hasErrors()) {
-            dto.setId(id);
-            var chave = factory.getStrategy().update(modelMapper.map(dto, ChavePix.class));
-            return ResponseEntity.ok(modelMapper.map(chave, ChavePixDTO.class));
-        }
-        throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+    public ResponseEntity<ChavePixDTO> updateKey(@PathVariable("id") String id, @Valid @RequestBody AlteraChavePixDTO dto) {
+        dto.setId(id);
+        var chave = factory.getStrategy().update(modelMapper.map(dto, ChavePix.class));
+        return ResponseEntity.ok(modelMapper.map(chave, ChavePixDTO.class));
     }
 
     @GetMapping(path = "/chaves/{id}")

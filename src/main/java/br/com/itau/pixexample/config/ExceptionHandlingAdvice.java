@@ -1,13 +1,15 @@
 package br.com.itau.pixexample.config;
 
 import br.com.itau.pixexample.exception.BusinessException;
-import br.com.itau.pixexample.exception.NotFoundException;
 import br.com.itau.pixexample.exception.dto.ResponseErrorDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @ResponseBody
@@ -33,8 +35,7 @@ class ExceptionHandlingAdvice {
     }
 
     @ExceptionHandler({
-            EntityNotFoundException.class,
-            NotFoundException.class
+            EntityNotFoundException.class
     })
     @ResponseStatus(NOT_FOUND)
     ResponseEntity<ResponseErrorDto> handleNotFound(HttpServletRequest httpServletRequest, Throwable throwable) {
@@ -44,6 +45,12 @@ class ExceptionHandlingAdvice {
     @ExceptionHandler({ BusinessException.class })
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     ResponseEntity<ResponseErrorDto> handleUnprocessableEntity(HttpServletRequest httpServletRequest, Throwable throwable) {
+        return logStackTraceAndConstructResponseErrorDto(httpServletRequest, throwable, UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler({ MethodArgumentNotValidException.class })
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    ResponseEntity<ResponseErrorDto> handleArgumentNotValidEntity(HttpServletRequest httpServletRequest, Throwable throwable) {
         return logStackTraceAndConstructResponseErrorDto(httpServletRequest, throwable, UNPROCESSABLE_ENTITY);
     }
 
@@ -64,8 +71,19 @@ class ExceptionHandlingAdvice {
                 throwable
         );
 
+        var customMessage = throwable.getMessage();
+
+        if(throwable instanceof MethodArgumentNotValidException) {
+            customMessage = ((MethodArgumentNotValidException) throwable)
+                    .getBindingResult()
+                    .getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.joining());
+        }
+
         var response = ResponseErrorDto.builder()
-                .message(throwable.getMessage())
+                .message(customMessage)
                 .path(httpServletRequest.getRequestURI())
                 .statusCode(httpStatus.value())
                 .statusMessage(httpStatus.getReasonPhrase())
