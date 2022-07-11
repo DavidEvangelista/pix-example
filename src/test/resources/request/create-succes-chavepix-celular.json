@@ -1,0 +1,10 @@
+{
+  "nomeCorrentista": "David",
+  "numeroAgencia": 1234,
+  "numeroConta": 23231231,
+  "sobrenomeCorrentista": "Teste",
+  "tipoChave": "CELULAR",
+  "tipoConta": "CORRENTE",
+  "tipoPessoa": "F",
+  "valorChave": "+5561981674340"
+}
